@@ -44,5 +44,5 @@ release: clean publish build-proxy
 	mkdir -p dist
 	cp -r build/. dist
 
-# test:
+# test :
 # 	echo "TODO: add tests"
