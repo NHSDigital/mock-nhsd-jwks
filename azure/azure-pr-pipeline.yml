@@ -12,7 +12,7 @@ resources:
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
-    source: "Mock-NHSID-JWKS-Endpoint-Build"
+    source: "Mock-NHSID-JWKS-Build"
     trigger:
       branches:
         exclude:
@@ -32,6 +32,8 @@ extends:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
-  apigee_deployments:
+    product_display_name: ${{ variables.product_display_name }}
+    product_description: ${{ variables.product_description }}
+    enable_monitoring: false    
+    apigee_deployments:
       - environment: internal-dev
-    
