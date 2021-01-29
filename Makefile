@@ -13,7 +13,7 @@ install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
 
 lint:
-	npm run lint
+	yarn run lint
 	poetry run flake8 **/*.py
 
 clean:
