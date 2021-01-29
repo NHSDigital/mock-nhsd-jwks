@@ -20,11 +20,11 @@ clean:
 	rm -rf build
 	rm -rf dist
 
-# publish: clean
+publish: clean
 # 	mkdir -p build
 # 	yarn run publish 2> /dev/null
 
-# serve:
+serve:
 # 	npm run serve
 
 check-licenses:
