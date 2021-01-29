@@ -27,7 +27,7 @@ clean:
 # serve:
 # 	npm run serve
 
-# check-licenses:
+check-licenses:
 # 	npm run check-licenses
 # 	scripts/check_python_licenses.sh
 
