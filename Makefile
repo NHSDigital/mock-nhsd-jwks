@@ -12,7 +12,7 @@ install-node:
 install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
 
-# lint:
+lint:
 # 	#yarn run lint
 # 	poetry run flake8 **/*.py
 
