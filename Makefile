@@ -13,7 +13,7 @@ install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
 
 lint:
-	yarn run lint
+	#yarn run lint
 	poetry run flake8 **/*.py
 
 clean:
@@ -24,8 +24,8 @@ publish: clean
 	mkdir -p build
 	npm run publish 2> /dev/null
 
-serve:
-	npm run serve
+# serve:
+# 	npm run serve
 
 check-licenses:
 	npm run check-licenses
