@@ -1,4 +1,4 @@
-<TargetEndpoint name="{{ config.meta.service_name }}-target">
+<TargetEndpoint name="apim">
   <FaultRules>
     <FaultRule name="access_token_expired">
       <Step>

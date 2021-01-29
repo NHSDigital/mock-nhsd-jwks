@@ -43,7 +43,7 @@
     </Flow>
     <PreFlow/>
     <HTTPProxyConnection>
-        <BasePath>{% raw %}{{ SERVICE_BASE_PATH }}{% endraw %}</BasePath>
+        <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="NoRoute">
@@ -54,8 +54,5 @@
     </RouteRule>
     <RouteRule name="NoRouteStatus">
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
-    </RouteRule>
-    <RouteRule name="{{ config.meta.service_name }}-target">
-        <TargetEndpoint>{{ config.meta.service_name }}-target</TargetEndpoint>
     </RouteRule>
 </ProxyEndpoint>
