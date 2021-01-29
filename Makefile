@@ -6,8 +6,8 @@ install-python:
 	poetry install
 
 install-node:
+	npm install -g yarn
 	npm install
-	cd sandbox && npm install
 
 install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
@@ -34,8 +34,8 @@ check-licenses:
 format:
 	poetry run black **/*.py
 
-sandbox: update-examples
-	cd sandbox && npm run start
+# sandbox: update-examples
+# 	cd sandbox && npm run start
 
 build-proxy:
 	scripts/build_proxy.sh
@@ -44,5 +44,5 @@ release: clean publish build-proxy
 	mkdir -p dist
 	cp -r build/. dist
 
-test:
-	echo "TODO: add tests"
+# test:
+# 	echo "TODO: add tests"
