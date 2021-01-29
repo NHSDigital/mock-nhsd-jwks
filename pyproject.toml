@@ -3,7 +3,7 @@ python = "^3.8"
 
 
 [tool.poetry]
-name = "mock-nhsid-jwks-endpoint"
+name = "mock-nhsid-jwks"
 version = "0.0.1-alpha"
 description = "TODO"
 
@@ -15,7 +15,7 @@ authors = [
 
 readme = 'README.md'
 
-repository = "https://github.com/NHSDigital/mock-nhsid-jwks-endpoint"
+repository = "https://github.com/NHSDigital/mock-nhsid-jwks"
 homepage = ""
 
 keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
