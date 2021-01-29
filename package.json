@@ -4,6 +4,9 @@
     "description": "OAS (Swagger v3) API Definition for mock-nhsid-jwks",
     "author": "NHS Digital",
     "license": "(MIT OR OGL)",
-    "homepage": "https://github.com/NHSDigital/mock-nhsid-jwks"
+    "homepage": "https://github.com/NHSDigital/mock-nhsid-jwks",
+    "scripts": {
+      "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL"
+    }
   }
   
