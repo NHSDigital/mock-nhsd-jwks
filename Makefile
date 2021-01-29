@@ -22,7 +22,7 @@ clean:
 
 publish: clean
 	mkdir -p build
-	npm run publish 2> /dev/null
+	yarn run publish 2> /dev/null
 
 # serve:
 # 	npm run serve
