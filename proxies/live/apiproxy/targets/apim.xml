@@ -30,11 +30,10 @@
     </Request>
   </PreFlow>
   <HTTPTargetConnection>
-    <URL>http://mocktarget.apigee.net</URL>
-    <Properties>
-      <Property name="supports.http10">true</Property>
-      <Property name="request.retain.headers">User-Agent,Referer,Accept-Language</Property>
-      <Property name="retain.queryparams">apikey</Property>
-    </Properties>
+    <PreFlow name="PreFlow">
+      <Request>
+      </Request>
+    </PreFlow>
+    {{ HOSTED_TARGET_CONNECTION }}
   </HTTPTargetConnection>
 </TargetEndpoint>

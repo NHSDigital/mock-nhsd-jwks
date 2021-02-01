@@ -40,9 +40,18 @@ format:
 build-proxy:
 	scripts/build_proxy.sh
 
+# release: clean publish build-proxy
+# 	mkdir -p dist
+# 	cp -r build/. dist
+
 release: clean publish build-proxy
 	mkdir -p dist
-	cp -r build/. dist
+	tar -zcvf dist/package.tar.gz build
+	for env in internal-dev do \
+		cp ecs-proxies-deploy-mock-jwks.yml dist/ecs-deploy-$$env.yml; \
+	done
+
+	cp -r build/. dist	
 
 # test :
 # 	echo "TODO: add tests"

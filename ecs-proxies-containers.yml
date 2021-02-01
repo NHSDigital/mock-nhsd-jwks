@@ -1,0 +1,4 @@
+docker_containers:
+    - name: mock-nhsid-jwks
+      dockerfile: "docker/mock-nhsid-jwks/Dockerfile"
+      path: "docker/mock-nhsid-jwks"
