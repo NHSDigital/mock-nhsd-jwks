@@ -29,18 +29,6 @@
       </Step>
     </Request>
   </PreFlow>
-  <!--
-    To point to a named target server as this is how it SHOULD be implemented:
-    For example:
-    <HTTPTargetConnection>
-      <SSLInfo>
-        <Enabled>true</Enabled>
-      </SSLInfo>
-      <LoadBalancer>
-        <Server name="{{ config.meta.service_name }}-target" />
-      </LoadBalancer>
-    </HTTPTargetConnection>
-  -->
   <HTTPTargetConnection>
     <URL>http://mocktarget.apigee.net</URL>
     <Properties>
