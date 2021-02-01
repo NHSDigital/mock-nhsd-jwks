@@ -1,6 +1,6 @@
 <ProxyEndpoint name="default">
     <Flows>
-      <Flow name="OptionsPreFlight">
+      <!-- <Flow name="OptionsPreFlight">
             <Request/>
             <Response>
                 <Step>
@@ -8,7 +8,7 @@
                 </Step>
             </Response>
         <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
-      </Flow>
+      </Flow> -->
       <Flow name="AddPayloadToPing">
         <Description/>
         <Request/>
