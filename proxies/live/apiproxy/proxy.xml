@@ -1,4 +1,0 @@
-<APIProxy name="{{ config.meta.short_service_name }}">
-  <!-- This is the root of the application -->
-  <Description>Proxy to {{ config.meta.product_display_name }} endpoints.</Description>
-</APIProxy>
