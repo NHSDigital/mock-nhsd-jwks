@@ -32,14 +32,14 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
     <PreFlow/>
+  </Flows>
     <PostClientFlow name="PostClientFlow">
       <Response>
         <Step>
           <Name>FlowCallout.LogToSplunk</Name>
         </Step>
       </Response>
-    </PostClientFlow>
-  </Flows>
+    </PostClientFlow>  
     <HTTPProxyConnection>
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
