@@ -1,7 +1,6 @@
 variables:
-  service_name: {{ config.meta.service_name }}
-  short_service_name: {{ config.meta.short_service_name }}
-  service_base_path: {{ config.meta.service_base_path }}
-  product_display_name: {{ config.meta.product_display_name }}
-  product_description: {{ config.meta.product_description }}
-  spec_file: {{ config.meta.service_name }}.json
+  service_name: mock-nhsid-jwks
+  short_service_name: mock-nhsid-jwks
+  service_base_path: mock-nhsid-jwks
+  product_display_name: Mock NHSID JWKS Endpoint
+  product_description: Mock NHSID JWKS Endpoint
