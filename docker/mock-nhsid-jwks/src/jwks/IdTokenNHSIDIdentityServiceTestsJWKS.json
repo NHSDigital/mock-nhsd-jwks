@@ -6,6 +6,13 @@
             "e": "AQAB",
             "use": "sig",
             "kid": "identity-service-tests-1"
-        }
+        },
+        {
+            "kty": "RSA",
+            "n": "pMJaDVC6xs87iThIZlNIhY5qlDGxdtsQC0aGv4awOYqTO8ikmhjbdhUjMC75YjJunfbMnKyIukPg_UT78EIcjUyKyKIdW5huOFQhdrDnpTO1Euzrk959GhOcClJec8vEY7t0TiKbQzyuSxW-_53JVMx8pB4IV3gihDoBjdT3oL_YIOIyfBOvibwbMSPik7G177Kd0T_Eb4HUJ9XYhshifwuY0CDhb2eJ07fvIQUkERkcua5yduLAKNysD68UtZaubLuo6eq-d-P4qFOBjMyBwu8qglhZfY5-pC3v-XJ6HlmoZzwNdJwGhljHohB9d1VJMwULHTSjsCc1XD430pbF9w",
+            "e": "AQAB",
+            "use": "sig",
+            "kid": "test-2"
+          }
     ]
 }
