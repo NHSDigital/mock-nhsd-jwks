@@ -12,7 +12,7 @@ resources:
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
-    source: "mock-nhsid-jwks-Build"
+    source: "Mock-Proxy-Build"
     trigger:
       branches:
         exclude:
