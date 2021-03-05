@@ -6,8 +6,8 @@ install-python:
 	poetry install
 
 install-node:
-	npm install -g yarn
-	npm install
+	sudo npm install -g yarn
+	sudo npm install
 
 install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
