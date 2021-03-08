@@ -11,6 +11,9 @@
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
       </Flow>    
     <PreFlow/>
+    <Flows name="poc">
+      
+    </Flows>
   </Flows>
     <PostClientFlow name="PostClientFlow">
       <Response>
