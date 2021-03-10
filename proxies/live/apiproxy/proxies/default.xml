@@ -11,8 +11,8 @@
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
       </Flow>    
     <PreFlow/>
-    <Flows name="poc">
-      
+    <Flows name="UserRoleService">
+      <Condition>proxy.pathsuffix MatchesPath "/user-role-service"</Condition>
     </Flows>
   </Flows>
     <PostClientFlow name="PostClientFlow">

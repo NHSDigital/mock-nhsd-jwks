@@ -1,13 +1,39 @@
 node_modules/
 bin/
 dist/
-build/
 public/
 newman/
-.idea
-.DS_Store
+build
+venv
+
+# utils directory will be clone during pipeline.
+utils
+
+
 .#*
 
 __pycache__/
 .envrc
-.idea/
+
+### VS Code ###
+.vscode
+
+### IntelliJ IDEA ###
+.idea/*
+.idea
+*.iws
+*.iml
+*.ipr
+!.idea/codeStyles
+!.idea/runConfigurations
+
+### Mac ###
+.DS_Store
+
+sandbox.postman_environment.json
+
+docker/*/node_modules
+.pytest_cache/
+*.env
+report.xml
+

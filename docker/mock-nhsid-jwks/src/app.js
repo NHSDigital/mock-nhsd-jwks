@@ -11,7 +11,7 @@ const init = async () => {
     routes: {
       cors: true, // Won't run as Apigee hosted target without this
       files: {
-        relativeTo: Path.join(__dirname, 'jwks'),
+        relativeTo: Path.join(__dirname, 'mockEndpoints'),
       },
     },
   });

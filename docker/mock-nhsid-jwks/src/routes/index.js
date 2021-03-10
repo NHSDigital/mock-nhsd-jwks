@@ -1,4 +1,4 @@
-const identityServiceJWKS = require('./routes');
-const routes = [].concat(identityServiceJWKS)
+const mockEndpoints = require('./routes');
+const routes = [].concat(mockEndpoints)
 
 module.exports = routes
