@@ -14,7 +14,7 @@
     <Flow name="UserRoleService">
       <Request>
         <Step>
-            <Name>FlowCallout.ValidateUserInfo</Name>
+            <Name>FlowCallout.UserRoleService</Name>
         </Step>
       </Request>
       <Condition>proxy.pathsuffix MatchesPath "/user-role-service"</Condition>

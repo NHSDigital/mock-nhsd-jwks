@@ -11,7 +11,7 @@ class TestCasesSuite:
     @pytest.mark.usefixtures('get_token_internal_dev')
     def test_happy_path(self):
         # Given
-        expected_status_code = 404
+        expected_status_code = 200
 
         # When
         response = requests.get(
