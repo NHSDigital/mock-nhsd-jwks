@@ -11,14 +11,14 @@
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
       </Flow>    
     <PreFlow/>
-    <Flows name="UserRoleService">
+    <Flow name="UserRoleService">
       <Request>
         <Step>
             <Name>FlowCallout.ValidateUserInfo</Name>
         </Step>
       </Request>
       <Condition>proxy.pathsuffix MatchesPath "/user-role-service"</Condition>
-    </Flows>
+    </Flow>
   </Flows>
     <PostClientFlow name="PostClientFlow">
       <Response>
