@@ -16,4 +16,13 @@ const healthCheck = {
     }
 }
 
-module.exports = [identityServiceJWKS, healthCheck]
+const userRoleService = {
+  method: ['GET', 'POST', 'PUT'],
+  path: '/user-role-service',
+  handler: (request, h) => {
+    const path = 'userRoleService.json'
+    return h.file(path)
+  }
+}
+
+module.exports = [identityServiceJWKS, healthCheck, userRoleService]
