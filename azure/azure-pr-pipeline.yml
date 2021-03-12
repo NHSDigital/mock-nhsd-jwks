@@ -34,6 +34,13 @@ extends:
     service_base_path: ${{ variables.service_base_path }}
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
-    enable_monitoring: false    
+    enable_monitoring: false
+    secret_file_ids:
+      - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
+      - ptl/app-credentials/jwt_testing/non-prod/ID_TOKEN_TESTING_PRIVATE_KEY 
     apigee_deployments:
       - environment: internal-dev
+        post_deploy:
+          - template: ./templates/run-integration-tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}       
