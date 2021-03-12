@@ -21,8 +21,8 @@ clean:
 	rm -rf dist
 
 publish: clean
-	mkdir -p build
-	yarn run publish 2> /dev/null
+	# mkdir -p build
+	# yarn run publish 2> /dev/null
 
 serve:
 	npm run serve
