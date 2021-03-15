@@ -51,7 +51,8 @@ release: clean publish build-proxy
 		cp ecs-proxies-deploy-mock-jwks.yml dist/ecs-deploy-$$env.yml; \
 	done
 
-	cp -r build/. dist	
+	cp -r build/. dist
+	cp -r api_tests dist	
 
 test :
 	echo "TODO: add tests"
