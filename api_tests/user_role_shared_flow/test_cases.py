@@ -29,7 +29,7 @@ class TestCasesSuite:
             }
         )
 
-        await apigee_app.add_api_product(api_products=["mock-nhsid-jwks-pr-12"])
+        await apigee_app.add_api_product(api_products=[config.MOCK_PROXY_PATH])
 
         yield apigee_app
         print("Destroying Test App..")
