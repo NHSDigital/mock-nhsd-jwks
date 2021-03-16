@@ -46,6 +46,7 @@ class TestCasesSuite:
         token = token["body"]["access_token"]
         # Given
         expected_status_code = 200
+        expected_response = {"message": "It works!"}
 
         # When
         response = requests.get(
@@ -58,6 +59,7 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_response).is_equal_to(response.json())
 
     @pytest.mark.asyncio
     async def test_default_role(self, test_app):
@@ -70,15 +72,16 @@ class TestCasesSuite:
         token = token["body"]["access_token"]
         # Given
         expected_status_code = 200
+        expected_response = {"message": "It works!"}
 
         # When
         response = requests.get(
             url=config.USER_ROLE_SHARED_FLOW,
             headers={"Authorization": f"Bearer {token}"},
         )
-
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_response).is_equal_to(response.json())
 
     @pytest.mark.asyncio
     async def test_user_invalid_role_in_header(self, test_app):
@@ -91,6 +94,8 @@ class TestCasesSuite:
         token = token["body"]["access_token"]
         # Given
         expected_status_code = 401
+        expected_error = "invalid role"
+        expected_error_description = "NHSD-Session-URID value is invalid"
 
         # When
         response = requests.get(
@@ -103,9 +108,13 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_error).is_equal_to(response.json()["error"])
+        assert_that(expected_error_description).is_equal_to(
+            response.json()["error_description"]
+        )
 
     @pytest.mark.asyncio
-    async def test_missing_role_token(self, test_app):
+    async def test_no_role_provided(self, test_app):
         oauth = OauthHelper(
             client_id=test_app.client_id,
             client_secret=test_app.client_secret,
@@ -118,6 +127,8 @@ class TestCasesSuite:
         token = token["body"]["access_token"]
         # Given
         expected_status_code = 401
+        expected_error = "invalid role"
+        expected_error_description = "selected_role_id is missing in your token"
 
         # When
         response = requests.get(
@@ -127,3 +138,7 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_error).is_equal_to(response.json()["error"])
+        assert_that(expected_error_description).is_equal_to(
+            response.json()["error_description"]
+        )
