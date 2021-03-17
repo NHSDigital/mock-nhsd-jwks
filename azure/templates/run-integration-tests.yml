@@ -19,7 +19,7 @@ steps:
       export JWT_PRIVATE_KEY_ABSOLUTE_PATH="$(Pipeline.Workspace)/secrets/$(JWT_TESTING_PRIVATE_KEY)"
       export APIGEE_API_TOKEN="$(secret.AccessToken)"
       export MOCK_PROXY=$SERVICE_NAME
-      pytest -v --junitxml=test-report.xml
+      pytest --reruns 5 --reruns-delay 1 -v --junitxml=test-report.xml
     workingDirectory: $(Pipeline.Workspace)/s/${{ parameters.service_name }}/$(SERVICE_ARTIFACT_NAME)/api_tests
     displayName: Run integration tests
   - task: PublishTestResults@2
