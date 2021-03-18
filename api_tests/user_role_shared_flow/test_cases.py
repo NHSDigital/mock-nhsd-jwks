@@ -95,7 +95,7 @@ class TestCasesSuite:
         # Given
         expected_status_code = 400
         expected_error = "invalid role"
-        expected_error_description = "NHSD-Session-URID is invalid"
+        expected_error_description = "nhsd-Session-urid is invalid"
 
         # When
         response = requests.get(
