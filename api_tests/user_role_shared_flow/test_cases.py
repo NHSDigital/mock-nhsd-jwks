@@ -93,9 +93,9 @@ class TestCasesSuite:
         token = await oauth.get_token_response(grant_type="authorization_code")
         token = token["body"]["access_token"]
         # Given
-        expected_status_code = 401
+        expected_status_code = 400
         expected_error = "invalid role"
-        expected_error_description = "NHSD-Session-URID value is invalid"
+        expected_error_description = "nhsd-Session-urid is invalid"
 
         # When
         response = requests.get(
@@ -126,9 +126,9 @@ class TestCasesSuite:
         )
         token = token["body"]["access_token"]
         # Given
-        expected_status_code = 401
+        expected_status_code = 400
         expected_error = "invalid role"
-        expected_error_description = "selected_role_id is missing in your token"
+        expected_error_description = "selected_roleid is missing in your token"
 
         # When
         response = requests.get(
