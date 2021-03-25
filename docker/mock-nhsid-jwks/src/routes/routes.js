@@ -1,16 +1,25 @@
 const identityServiceJWKS =  {
     method: 'GET',
     path: '/identity-service/jwks',
-    handler: (request, h) => {    
+    handler: (request, h) => {
         const path = 'IdTokenNHSIDIdentityServiceTestsJWKS.json'
         return h.file(path)
     }
   };
 
+const nhsLoginJWKS =  {
+  method: 'GET',
+  path: '/identity-service/nhs-login-jwks',
+  handler: (request, h) => {
+    const path = 'IdTokenNHSLoginServiceTestsJWKS.json'
+    return h.file(path)
+  }
+};
+
 const healthCheck = {
   method: 'GET',
     path: '/_status',
-    handler: (request, h) => {    
+    handler: (request, h) => {
         const path = 'status.json'
         return h.file(path)
     }
@@ -25,4 +34,4 @@ const userRoleService = {
   }
 }
 
-module.exports = [identityServiceJWKS, healthCheck, userRoleService]
+module.exports = [identityServiceJWKS, nhsLoginJWKS, healthCheck, userRoleService]
