@@ -14,7 +14,7 @@ const nhsLoginJWKS =  {
     const path = 'IdTokenNHSLoginServiceTestsJWKS.json'
     return h.file(path)
   }
-};
+}; 
 
 const nhscis2JWKS =  {
   method: 'GET',
