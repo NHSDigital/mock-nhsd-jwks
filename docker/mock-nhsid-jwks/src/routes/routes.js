@@ -16,6 +16,15 @@ const nhsLoginJWKS =  {
   }
 };
 
+const nhscis2JWKS =  {
+  method: 'GET',
+  path: '/identity-service/nhs-cis2-jwks',
+  handler: (request, h) => {
+    const path = 'IdTokenNHSCIS2IdentityServiceTestsJWKS.json'
+    return h.file(path)
+  }
+};
+
 const healthCheck = {
   method: 'GET',
     path: '/_status',
@@ -34,4 +43,4 @@ const userRoleService = {
   }
 }
 
-module.exports = [identityServiceJWKS, nhsLoginJWKS, healthCheck, userRoleService]
+module.exports = [identityServiceJWKS, nhsLoginJWKS, nhscis2JWKS, healthCheck, userRoleService]
