@@ -19,6 +19,16 @@
       </Request>
       <Condition>proxy.pathsuffix MatchesPath "/user-role-service"</Condition>
     </Flow>
+        <Flow name="cis2_simulated_token">
+            <Description/>
+            <Request/>
+            <Response>
+                <Step>
+                    <Name>AssignMessage.SimulatedTokenPayload</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
+        </Flow>
   </Flows>
     <PostClientFlow name="PostClientFlow">
       <Response>
@@ -33,6 +43,9 @@
     </HTTPProxyConnection>
     <RouteRule name="NoRoutePing">
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+    </RouteRule>
+    <RouteRule name="NoRouteCis2MockToken">
+      <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and ((request.verb = "POST"))</Condition>
     </RouteRule>
     <RouteRule name="apim">
       <TargetEndpoint>apim</TargetEndpoint>
