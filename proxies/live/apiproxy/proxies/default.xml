@@ -44,6 +44,9 @@
     <RouteRule name="NoRoutePing">
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </RouteRule>
+    <RouteRule name="NoRouteCis2MockToken">
+      <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and ((request.verb = "POST"))</Condition>
+    </RouteRule>
     <RouteRule name="apim">
       <TargetEndpoint>apim</TargetEndpoint>
     </RouteRule>
