@@ -11,14 +11,6 @@
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
       </Flow>    
     <PreFlow/>
-    <Flow name="UserRoleService">
-      <Request>
-        <Step>
-            <Name>FlowCallout.UserRoleService</Name>
-        </Step>
-      </Request>
-      <Condition>proxy.pathsuffix MatchesPath "/user-role-service"</Condition>
-    </Flow>
         <Flow name="cis2_simulated_token">
             <Description/>
             <Request/>
