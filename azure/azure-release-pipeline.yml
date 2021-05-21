@@ -40,3 +40,4 @@ extends:
       - environment: ref
       - environment: sandbox
       - environment: dev
+      - environment: int

@@ -47,7 +47,7 @@ release: clean publish build-proxy
 release: clean publish build-proxy
 	mkdir -p dist
 	tar -zcvf dist/package.tar.gz build
-	for env in internal-dev internal-qa ref internal-dev-sandbox internal-qa-sandbox sandbox dev; do \
+	for env in internal-dev internal-qa ref internal-dev-sandbox internal-qa-sandbox sandbox dev int; do \
 		cp ecs-proxies-deploy-mock-jwks.yml dist/ecs-deploy-$$env.yml; \
 	done
 
