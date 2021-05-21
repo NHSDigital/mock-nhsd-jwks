@@ -33,6 +33,10 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     apigee_deployments:
-      - environment: internal-dev      
+      - environment: internal-dev
+      - environment: internal-dev-sandbox
       - environment: internal-qa
+      - environment: internal-qa-sandbox
       - environment: ref
+      - environment: sandbox
+      - environment: dev
