@@ -35,6 +35,24 @@
         </Request>
         <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "GET")</Condition>
       </Flow>
+      <Flow name="Flow.SimulatedUserAuthPost">
+          <Description>Provide a simulated user authorization interaction - Process login</Description>
+          <Request>
+              <Step>
+                  <Name>AssignMessage.GenerateSimulatedAuthCode</Name>
+              </Step>
+              <Step>
+                  <Name>PopulateCache.SimulatedAuthCode</Name>
+              </Step>
+              <Step>
+                  <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.RedirectToApigeeCallback</Name>
+              </Step>
+          </Request>
+          <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "POST")</Condition>
+      </Flow>
   </Flows>
     <PostClientFlow name="PostClientFlow">
       <Response>
