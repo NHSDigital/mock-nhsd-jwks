@@ -12,10 +12,23 @@
       </Flow>    
       <Flow name="cis2_simulated_token">
           <Description/>
-          <Request/>
+          <Request>
+              <Step>
+                  <Name>LookupCache.SimulatedAuthAuthMethod</Name>
+              </Step>
+          </Request>
           <Response>
               <Step>
                   <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Condition>auth_method Equals "N3_SMARTCARD"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Condition>auth_method Equals "FIDO2"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Condition>auth_method Equals "IOS"</Condition>
               </Step>
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
@@ -37,7 +50,7 @@
       </Flow>
       <Flow name="Flow.SimulatedUserAuthPost">
           <Description>Provide a simulated user authorization interaction - Process login</Description>
-          <Request>
+          <Response>
               <Step>
                   <Name>AssignMessage.GenerateSimulatedAuthCode</Name>
               </Step>
@@ -50,7 +63,7 @@
               <Step>
                   <Name>AssignMessage.RedirectToApigeeCallback</Name>
               </Step>
-          </Request>
+          </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "POST")</Condition>
       </Flow>
   </Flows>
@@ -65,6 +78,9 @@
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
+    <RouteRule name="NoRouteSimulatedAuthPage">
+        <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and ((request.verb = "GET") or (request.verb = "HEAD") or (request.verb = "POST"))</Condition>
+    </RouteRule>
     <RouteRule name="NoRoutePing">
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </RouteRule>
