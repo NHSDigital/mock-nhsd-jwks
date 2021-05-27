@@ -40,6 +40,10 @@
                   <Name>AssignMessage.SimulatedTokenPayload</Name>
                   <Condition>auth_method Equals "IOS"</Condition>
               </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Condition>auth_method Equals null</Condition>
+              </Step>
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
       </Flow>
