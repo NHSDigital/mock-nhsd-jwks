@@ -55,9 +55,6 @@
                   <Name>AssignMessage.GenerateSimulatedAuthCode</Name>
               </Step>
               <Step>
-                  <Name>PopulateCache.SimulatedAuthCode</Name>
-              </Step>
-              <Step>
                   <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
               </Step>
               <Step>
