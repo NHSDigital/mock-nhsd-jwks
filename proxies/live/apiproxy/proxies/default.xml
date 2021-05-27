@@ -29,15 +29,15 @@
           </Request>
           <Response>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_N3_SMARTCARD</Name>
                   <Condition>auth_method Equals "N3_SMARTCARD"</Condition>
               </Step>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_FIDO2</Name>
                   <Condition>auth_method Equals "FIDO2"</Condition>
               </Step>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_IOS</Name>
                   <Condition>auth_method Equals "IOS"</Condition>
               </Step>
               <Step>

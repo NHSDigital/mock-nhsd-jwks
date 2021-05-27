@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SimulatedTokenPayload_FIDO2">
+    <DisplayName>AssignMessage.SimulatedTokenPayload_FIDO2</DisplayName>
+    <Set>
+        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlkZW50aXR5LXNlcnZpY2UtdGVzdHMtMSJ9.eyJhdF9oYXNoIjoidGZfLWxxcHEzNmx3TzdXbVNCSUo2USIsInN1YiI6Ijc4NzgwNzQyOTUxMSIsImF1ZGl0VHJhY2tpbmdJZCI6IjkxZjY5NGU2LTM3NDktNDJmZC05MGIwLWMzMTM0YjBkOThmNi0xNTQ2MzkxIiwiYW1yIjpbIkZJRE8yIl0sImlzcyI6Imh0dHBzOi8vYW0ubmhzaW50LmF1dGgtcHRsLmNpczIuc3BpbmVzZXJ2aWNlcy5uaHMudWs6NDQzL29wZW5hbS9vYXV0aDIvcmVhbG1zL3Jvb3QvcmVhbG1zL05IU0lkZW50aXR5L3JlYWxtcy9IZWFsdGhjYXJlIiwidG9rZW5OYW1lIjoiaWRfdG9rZW4iLCJhdWQiOiJzb21lLWNsaWVudC1pZCIsImNfaGFzaCI6ImJjN3p6R2tDbEMzTUVpRlEzWWhQS2ciLCJhY3IiOiJBQUwzX0FOWSIsIm9yZy5mb3JnZXJvY2sub3BlbmlkY29ubmVjdC5vcHMiOiItSTQ1TmptTURkTWEtYU5GMnNyOWhDN3FFR1EiLCJzX2hhc2giOiJMUEpOdWwtd293NG02RHNxeGJuaW5nIiwiYXpwIjoic29tZS1jbGllbnQtaWQiLCJhdXRoX3RpbWUiOjE2MTA1NTk4MDIsInJlYWxtIjoiL05IU0lkZW50aXR5L0hlYWx0aGNhcmUiLCJleHAiOjE2ODIxMjQyODEsInRva2VuVHlwZSI6IkpXVFRva2VuIiwiaWF0IjoxNjIyMTI0MjcxLCJzZWxlY3RlZF9yb2xlaWQiOiI1NTUyNTQyNDIxMDIifQ.T-PMStN0e8uu5W_9jrSQ8CP7aa1JoQRe2Be4w8CWEvgkFwBOj2uUNqmFlXbTwRF-3ft47ht81K2KTTe76UvZcCj41ktwivwmgEyxDNkiVXwj8F9ah0H_EUHP3SGTIoiOqGOq1AyYhNDoX0XDht5Uq4HPReev1agLmoa8vMeDF42K6219EPQux47MooAi4oCAHwfWSM4yXvu2ETH3INPHeQ_3768SYNRoOTi3JP9LiQKo5C1NKkdAs2Hr9bpHWiyWIiJhAqFLUOxIMDBJdW-hHvjd5bCF7o7aQX652iNPAbe-yizEfqqLemUN-VTXEIFYJJPlgPu7vToO0UbXAs-AXQ","expires_in":"123", "token_type":"Bearer"}</Payload>
+        <StatusCode>200</StatusCode>
+        <Verb>GET</Verb>
+        <Version>1.1</Version>
+    </Set>
+    <AssignTo createNew="false" transport="http" type="request"/>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>
