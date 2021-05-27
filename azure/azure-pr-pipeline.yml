@@ -38,6 +38,8 @@ extends:
     secret_file_ids:
       - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
       - ptl/app-credentials/jwt_testing/non-prod/ID_TOKEN_TESTING_PRIVATE_KEY 
+    jinja_templates:
+      VARIABLES_KVM: identity_service_config
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
