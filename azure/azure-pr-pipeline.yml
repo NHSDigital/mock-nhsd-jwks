@@ -46,3 +46,4 @@ extends:
           - template: ./templates/run-integration-tests.yml
             parameters:
               service_name: ${{ variables.service_name }}       
+
