@@ -47,6 +47,33 @@
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
       </Flow>
+      <Flow name="nhs_login_simulated_token">
+          <Description/>
+          <Request>
+              <Step>
+                  <Name>LookupCache.SimulatedAuthAuthMethod</Name>
+              </Step>
+          </Request>
+          <Response>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_N3_SMARTCARD</Name>
+                  <Condition>auth_method Equals "N3_SMARTCARD"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_FIDO2</Name>
+                  <Condition>auth_method Equals "FIDO2"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_IOS</Name>
+                  <Condition>auth_method Equals "IOS"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Condition>auth_method Equals null</Condition>
+              </Step>
+          </Response>
+          <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_token") and (request.verb = "POST")</Condition>
+      </Flow>
       <Flow name="Flow.SimulatedUserAuth">
           <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
           <Request>
@@ -97,6 +124,9 @@
     </RouteRule>
     <RouteRule name="NoRouteCis2MockToken">
       <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and ((request.verb = "POST"))</Condition>
+    </RouteRule>
+    <RouteRule name="NoRouteNHSLoginMockToken">
+      <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_token") and ((request.verb = "POST"))</Condition>
     </RouteRule>
     <RouteRule name="apim">
       <TargetEndpoint>apim</TargetEndpoint>
