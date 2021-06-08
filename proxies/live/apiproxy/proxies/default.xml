@@ -56,19 +56,19 @@
           </Request>
           <Response>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload_N3_SMARTCARD</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_P0</Name>
                   <Condition>auth_method Equals "P0"</Condition>
               </Step>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload_FIDO2</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_P5</Name>
                   <Condition>auth_method Equals "P5"</Condition>
               </Step>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload_IOS</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_P9</Name>
                   <Condition>auth_method Equals "P9"</Condition>
               </Step>
               <Step>
-                  <Name>AssignMessage.SimulatedTokenPayload</Name>
+                  <Name>AssignMessage.SimulatedTokenPayload_P9</Name>
                   <Condition>auth_method Equals null</Condition>
               </Step>
           </Response>

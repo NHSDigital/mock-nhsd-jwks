@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SimulatedTokenPayload_P9">
+    <DisplayName>AssignMessage.SimulatedTokenPayload_FIDO2</DisplayName>
+    <Set>
+        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtpZCI6Im5ocy1sb2dpbiIsInN1YiI6IjQ5ZjQ3MGExLWNjNTItNDliNy1iZWJhLTBmOWNlYzkzN2M0NiIsImF1ZCI6IkFQSU0tMSIsImlzcyI6Imh0dHBzOi8vaW50ZXJuYWwtZGV2LmFwaS5zZXJ2aWNlLm5ocy51ayIsImV4cCI6MTYxNjYwNDU3NCwiaWF0IjoxNjE2NjAwOTc0LCJqdGkiOiJiNjhkZGIyOC1lNDQwLTQ0M2QtODcyNS1kZmUwZGEzMzAxMTgifQ.eyJhdWQiOiJ0Zl8tQVBJTS0xIiwiaWRfc3RhdHVzIjoidmVyaWZpZWQiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYxNjYwMDY4MywiaXNzIjoiaHR0cHM6Ly9pbnRlcm5hbC1kZXYuYXBpLnNlcnZpY2UubmhzLnVrIiwidm90IjoiUDkuQ3AuQ2QiLCJleHAiOjE2ODMxNTc4NjQsImlhdCI6MTYyMzE1Nzg1NCwidnRtIjoiaHR0cHM6Ly9hdXRoLnNhbmRwaXQuc2lnbmluLm5ocy51ay90cnVzdG1hcmsvYXV0aC5zYW5kcGl0LnNpZ25pbi5uaHMudWsiLCJqdGkiOiJiNjhkZGIyOC1lNDQwLTQ0M2QtODcyNS1kZmUwZGEzMzAxMTgiLCJpZGVudGl0eV9wcm9vZmluZ19sZXZlbCI6IlA5In0.Fjacm2os3yjL6UiWOdyvtXaLKerDlrZuKU4THhi-hIBXbeOk4k4wYlzodMcabv7fC50lWpnHtxbjE7EJX3sBtPzmISov0wCfNuTRZcK_XbBOozKetywOp0bQxT5cnCHyz99GCx-aPywH8UGqVbg9CPKA-1ZzCBQoC4OBLYdPXrJ6MDPrlaPVhAFANwcPCEBNLL-ExnK5E6UOBv4vXbK1mwS1Zu6sIYdlHPuhqET_IuRlld7wfJUdWqURYl01gaNxUasPKy7D_lCVU2VCuBdAj_Vxrr2Ovyski-w6yirWcSL8yUrYd45TCWWFuzb0Xm8gHnxxLrxK9_1W9wvHsa8R6OPpKGpiaVsNLGa3c4QlcmgxT-dEgV6_GQQZt_r4ls_kr9iqHsnwrBG6HUChiO6XM41nmTmZbHeiFNfJH8DRF-mMahHAGEkC9oEABica7LiJgVnap-EEeVmVGoC_jOe1Y9SRBThpXZ4v8y7jYFNDyrcqmTp6GA8vER2YUmS4Djax4RMGlcmc2MZmPFYQgWXYQzx25g9W1X2bHuSfXWT7mgIM_vfnQvQxl7OKv414EeYQN-wOPzTCqAfdDGuBvgsJlfC265Rdgd7tgqDi5YF1fkFFSSzVyZrsQ6Y1ecfjF4VwFKQ8g1uygJ3uVrMsfhVafnpnJnLRfkEJ6X7tNuTyNqA","expires_in":"123", "token_type":"Bearer"}</Payload>
+        <StatusCode>200</StatusCode>
+        <Verb>GET</Verb>
+        <Version>1.1</Version>
+    </Set>
+    <AssignTo createNew="false" transport="http" type="request"/>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>
