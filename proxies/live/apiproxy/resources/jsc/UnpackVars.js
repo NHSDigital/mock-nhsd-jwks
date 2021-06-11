@@ -20,4 +20,4 @@ function set_variables(location, vars) {
 }
 
 var identityServiceConfig =  JSON.parse(context.getVariable("private.config_raw"));
-set_variables("identity-service-config", identityServiceConfig)
+set_variables("mock_proxy_config", identityServiceConfig)

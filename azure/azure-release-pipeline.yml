@@ -33,7 +33,7 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     jinja_templates:
-      VARIABLES_KVM: identity_service_config
+      VARIABLES_KVM: mock_proxy_config
     apigee_deployments:
       - environment: internal-dev
       - environment: internal-dev-sandbox

@@ -81,7 +81,7 @@
           and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-            <Condition>(request.queryparam.client_id NotEquals identity-service-config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals identity-service-config.cis2.redirect_uri)</Condition>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPage</Name>
@@ -99,7 +99,7 @@
                   <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
               </Step>
               <Step>
-                  <Name>AssignMessage.RedirectToApigeeCallback</Name>
+                  <Name>AssignMessage.RedirectToApigeeCallbackCIS2</Name>
               </Step>
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "POST")</Condition>
@@ -111,7 +111,7 @@
           and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-            <Condition>(request.queryparam.client_id NotEquals identity-service-config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals identity-service-config.cis2.redirect_uri)</Condition>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPageNHSLogin</Name>
@@ -129,7 +129,7 @@
                   <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
               </Step>
               <Step>
-                  <Name>AssignMessage.RedirectToApigeeCallback</Name>
+                  <Name>AssignMessage.RedirectToApigeeCallbackNHSLogin</Name>
               </Step>
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_auth") and (request.verb Equals "POST")</Condition>
