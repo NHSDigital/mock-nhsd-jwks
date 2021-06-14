@@ -2,7 +2,7 @@
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SimulatedTokenPayload_N3_SMARTCARD">
     <DisplayName>AssignMessage.SimulatedTokenPayload_N3_SMARTCARD</DisplayName>
     <Set>
-        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":{mock_proxy_config.cis2.N3_SMARTCARD_id_token},"expires_in":"123", "token_type":"Bearer"}</Payload>
+        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":"{mock_proxy_config.cis2.N3_SMARTCARD_id_token}","expires_in":"123", "token_type":"Bearer"}</Payload>
         <StatusCode>200</StatusCode>
         <Verb>GET</Verb>
         <Version>1.1</Version>

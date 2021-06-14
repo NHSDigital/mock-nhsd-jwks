@@ -2,7 +2,7 @@
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SimulatedTokenPayload_P9">
     <DisplayName>AssignMessage.SimulatedTokenPayload_P9</DisplayName>
     <Set>
-        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":{mock_proxy_config.nhs_login.P9_id_token},"expires_in":"123", "token_type":"Bearer"}</Payload>
+        <Payload contentType="application/json">{"access_token":"some-token","refresh_token":"some-refresh-token","id_token":"{mock_proxy_config.nhs_login.P9_id_token}","expires_in":"123", "token_type":"Bearer"}</Payload>
         <StatusCode>200</StatusCode>
         <Verb>GET</Verb>
         <Version>1.1</Version>

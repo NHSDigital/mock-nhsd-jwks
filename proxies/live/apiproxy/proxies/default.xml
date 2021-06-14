@@ -9,7 +9,7 @@
             </Step>
         </Request>
     </PreFlow>
-    <Flows>      
+    <Flows>
       <Flow name="AddPayloadToPing">
         <Description/>
         <Request/>
@@ -19,7 +19,7 @@
           </Step>
         </Response>
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
-      </Flow>    
+      </Flow>
       <Flow name="cis2_simulated_token">
           <Description/>
           <Request>
@@ -111,7 +111,7 @@
           and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.nhs_login.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.nhs_login.redirect_uri)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPageNHSLogin</Name>
@@ -141,7 +141,7 @@
           <Name>FlowCallout.LogToSplunk</Name>
         </Step>
       </Response>
-    </PostClientFlow>  
+    </PostClientFlow>
     <HTTPProxyConnection>
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
