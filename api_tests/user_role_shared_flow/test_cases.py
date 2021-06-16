@@ -76,3 +76,19 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+
+    @pytest.mark.asyncio
+    async def test_nhs_login_simulated_token_response(self):
+        # Given
+        expected_status_code = 200
+        # This long term id_token expiries on 2023. We will implement a full OIDC provider before that.
+        expected_response = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtpZCI6Im5ocy1sb2dpbiIsInN1YiI6IjQ5ZjQ3MGExLWNjNTItNDliNy1iZWJhLTBmOWNlYzkzN2M0NiIsImF1ZCI6IkFQSU0tMSIsImlzcyI6Imh0dHBzOi8vaW50ZXJuYWwtZGV2LmFwaS5zZXJ2aWNlLm5ocy51ayIsImV4cCI6MTYxNjYwNDU3NCwiaWF0IjoxNjE2NjAwOTc0LCJqdGkiOiJiNjhkZGIyOC1lNDQwLTQ0M2QtODcyNS1kZmUwZGEzMzAxMTgifQ.eyJhdWQiOiJzb21lLWNsaWVudC1pZCIsImlkX3N0YXR1cyI6InZlcmlmaWVkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MTY2MDA2ODMsImlzcyI6Imh0dHBzOi8vaW50ZXJuYWwtZGV2LmFwaS5zZXJ2aWNlLm5ocy51ayIsInZvdCI6IlA5LkNwLkNkIiwiZXhwIjoxNjgzMzMxMTY2LCJpYXQiOjE2MjMzMzExNTYsInZ0bSI6Imh0dHBzOi8vYXV0aC5zYW5kcGl0LnNpZ25pbi5uaHMudWsvdHJ1c3RtYXJrL2F1dGguc2FuZHBpdC5zaWduaW4ubmhzLnVrIiwianRpIjoiYjY4ZGRiMjgtZTQ0MC00NDNkLTg3MjUtZGZlMGRhMzMwMTE4IiwiaWRlbnRpdHlfcHJvb2ZpbmdfbGV2ZWwiOiJQOSJ9.jEOMCrD5n05KZFG2NSdBC9ENvaX8Hw8PhLB0ZIUR_0Ibz2j5lUUpi-f6imBNGYEkci9XtekfKYQrQn3s2V6BmFzv_XhhPWHjNabEaBsZOScRHXCp5KaU0WSeRts5ldcXfQvSmz_CEA7MPUZSxqUjw_4Yc7HdN9ocnwCBaCwCiLXkxlHeeajfYJXAfzdNd9iLK9HUZxojw_mHkb11CiNb0JHWKtMfghVK0OsvK-N0xsMAurqKwbhSJecteJm13GOfwpBCj9oWQYhalDhVXT12IfGXynEuhh8IUkvjHpgwUdVwMpx-zdraiRubZZ1X5W4Bc1wf1zl3xp2BgjVKAhOK-v-eekyXHxmv923ErTg2Fd3_A5U9_0i2CJJ3ICg1jHdfyVslntiavR5mM7OlPUlWAU6i1SdWkijLDtv_5jAnILZdd-cT2X0R_hJ-CwokbfQy_w180NzW8sqKI0Aw8LXiqStuh7dks77JKOrbS1drnJ0JzN8cyJTPA7mZgby9uDwmblOVY5AT65y5Y_Tc-qFd6b_3aSszVfEDKAsMG7jyLOIJnsmemiDSPdJes0m2xn9plnn_xrrWoP6XA5vONfGwP-aLinfd8wAhNRCIvjMqcMeu8zDZpRayhKY7iVzk5UQPvK20ha__pjemeVD9FfeB3iC0bPG7DSWc4RmfQwXyzF4"
+
+        # When
+        response = requests.post(
+            url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token'
+        )
+
+        # Then
+        assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_response).is_equal_to(response.json()['id_token'])

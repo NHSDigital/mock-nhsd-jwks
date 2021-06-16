@@ -69,15 +69,15 @@
             <input type="hidden" name="state" value="{request.queryparam.state}" />
             <div>
               <input type="radio" name="auth_method" id="P0" value="P0" checked="true"/>
-              <label for="P0">P0</label>
+              <label for="P0">Low (P0) Low identity proofing</label>
             </div>
             <div>
               <input type="radio" name="auth_method" id="P5" value="P5"/>
-              <label for="P5">P5</label>
+              <label for="P5">Medium (P5) Basic identity information</label>
             </div>
             <div>
               <input type="radio" name="auth_method" id="P9" value="P9"/>
-              <label for="P9">P9</label>
+              <label for="P9">High (P9) Physical comparison</label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             <p class="mt-5 mb-3 text-muted">NHS Digital</p>
