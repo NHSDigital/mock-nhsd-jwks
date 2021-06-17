@@ -51,6 +51,10 @@
           <Description/>
           <Request>
               <Step>
+                  <Name>RaiseFault.MissingClientAssertion</Name>
+                  <Condition>request.formparam.client_assertion Equals null</Condition>
+              </Step>
+              <Step>
                   <Name>LookupCache.SimulatedAuthAuthMethod</Name>
               </Step>
           </Request>
