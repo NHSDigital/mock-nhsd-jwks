@@ -52,7 +52,6 @@
         <Request>
           <Step>
             <Name>AssignMessage.GenerateUserinfoResponseSimulatedAuth</Name>
-            <Condition>idTokenIssuer Equals "nhsCis2"</Condition>
           </Step>
         </Request>
         <Response/>
