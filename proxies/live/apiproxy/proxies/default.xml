@@ -47,6 +47,17 @@
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
       </Flow>
+      <Flow name="Flow.GetUserInfoSimulatedAuth">
+        <Description/>
+        <Request>
+          <Step>
+            <Name>AssignMessage.GenerateUserinfoResponseSimulatedAuth</Name>
+            <Condition>idTokenIssuer Equals "nhsCis2"</Condition>
+          </Step>
+        </Request>
+        <Response/>
+        <Condition>(proxy.pathsuffix MatchesPath "/userinfo") and (request.verb = "GET")</Condition>
+      </Flow>
       <Flow name="Flow.SimulatedUserAuth">
           <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
           <Request>
@@ -97,6 +108,9 @@
     </RouteRule>
     <RouteRule name="NoRouteCis2MockToken">
       <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and ((request.verb = "POST"))</Condition>
+    </RouteRule>
+    <RouteRule name="NoRouteUserInfo">
+      <Condition>(proxy.pathsuffix MatchesPath "/userinfo") and ((request.verb = "GET"))</Condition>
     </RouteRule>
     <RouteRule name="apim">
       <TargetEndpoint>apim</TargetEndpoint>
