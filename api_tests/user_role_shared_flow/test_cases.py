@@ -89,4 +89,4 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
-        assert_that(response.text).is_not_equal_to(None)
+        assert_that(response.text).is_not_equal_to({})
