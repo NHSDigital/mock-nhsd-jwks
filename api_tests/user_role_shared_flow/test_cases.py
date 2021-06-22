@@ -76,3 +76,17 @@ class TestCasesSuite:
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
+
+    @pytest.mark.asyncio
+    async def test_userinfo_response(self):
+        # Given
+        expected_status_code = 200
+
+        # When
+        response = requests.get(
+            url=config.MOCK_PROXY_BASE_PATH + '/userinfo'
+        )
+
+        # Then
+        assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(response.json()).is_not_equal_to({})
