@@ -78,6 +78,23 @@ class TestCasesSuite:
         assert_that(expected_status_code).is_equal_to(response.status_code)
 
     @pytest.mark.asyncio
+    async def test_nhs_login_simulated_token_response(self):
+        # Given
+        expected_status_code = 200
+        # This long term id_token expiries on 2023. We will implement a full OIDC provider before that.
+        expected_response = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtpZCI6ImFjMTAyOWQyY2I4MWI0NTI3YTBiNjNlMmI0ZjI4MDM0NWYwNGRkNDIiLCJzdWIiOiI0OWY0NzBhMS1jYzUyLTQ5YjctYmViYS0wZjljZWM5MzdjNDYiLCJhdWQiOiJzb21lLWNsaWVudC1pZCIsImlzcyI6Imh0dHBzOi8vaW50ZXJuYWwtZGV2LmFwaS5zZXJ2aWNlLm5ocy51ayIsImV4cCI6MTY4MzMzMTE2NiwiaWF0IjoxNjIzODQ5MjcxLCJqdGkiOiI4ZWRhYmUyYi1jN2ZmLTQwYmQtYmM3Zi0wYjhkYzZhNTI0MjMifQ.eyJzdWIiOiI0OWY0NzBhMS1jYzUyLTQ5YjctYmViYS0wZjljZWM5MzdjNDYiLCJiaXJ0aGRhdGUiOiIxOTY4LTAyLTEyIiwibmhzX251bWJlciI6Ijk5MTIwMDMwNzEiLCJpc3MiOiJodHRwczovL2ludGVybmFsLWRldi5hcGkuc2VydmljZS5uaHMudWsiLCJ2dG0iOiJodHRwczovL2F1dGguc2FuZHBpdC5zaWduaW4ubmhzLnVrL3RydXN0bWFyay9hdXRoLnNhbmRwaXQuc2lnbmluLm5ocy51ayIsImF1ZCI6InNvbWUtY2xpZW50LWlkIiwiaWRfc3RhdHVzIjoidmVyaWZpZWQiLCJ0b2tlbl91c2UiOiJpZCIsInN1cm5hbWUiOiJNSUxMQVIiLCJhdXRoX3RpbWUiOjE2MjM4NDkyMDEsInZvdCI6IlA5LkNwLkNkIiwiaWRlbnRpdHlfcHJvb2ZpbmdfbGV2ZWwiOiJQOSIsImV4cCI6MTY4MzMzMTE2NiwiaWF0IjoxNjIzODQ5MjcxLCJmYW1pbHlfbmFtZSI6Ik1JTExBUiIsImp0aSI6IjhlZGFiZTJiLWM3ZmYtNDBiZC1iYzdmLTBiOGRjNmE1MjQyMyJ9.D4H6t8bne0I1kQvFSeLMkl7ITozyJd5tpJREKP3niiHlqgI1GXZVU3DJJW_p4ULkGBFPw302w56_f_hpAczNXDSWur0neF0KHdIhfFZwtrCrQ9CPvoal4tJLO5juHJorOndWSmtBeePBOx-Lf-nW55Rhsc5RMFcFX1SkkAxVKTG9aIFP0bH-2bcuOga1NbqZObm10_vYVJ23_y1cKvvpvacJ2WJY6W3Ei7YI3u3Wk7IJ9RPWAUZ2EhMGHiuZrnkdKdYNgVAbPekQatrJ4Wl8JC_1ulWIbrWHG7xc_UVMDsoZnxkshahqubifJYmZbKGohWurD1OqmD0DfCHTkZalH_B7SHSuI-3dt_Vzv3CK523ThVn5v_6OkJKO8lYUN8ldBaiCSpLai-BNfJT_p30_SQxm-bxIGKJVW_6kak7DJ3wbjkQasuZynsXmNWRR9yWqsAHdCed0rGTUalyjfHD3VJKMioC70_LqAnP6WRBOifmAnMybT3J99dth8xdPMxMZoiUMyVz6pt8w8KSnEcNOPkFFEOrL4Xge4dn7JHilS5TjhXDN2OmIbMUVtHQ69r1kT-5x1ABat6eOsI_DSUYtBAmZ61unj53mxr82QZeemPr5as9zlJY0nwDsdG9d4tfagDCOp8yAyHCmp5ZzAxgy_6KrUKAsu09zbmTwzuVe05o"
+
+        # When
+        response = requests.post(
+            url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token',
+            data={'client_assertion' : '1234'}
+        )
+
+         # Then
+        assert_that(expected_status_code).is_equal_to(response.status_code)
+        assert_that(expected_response).is_equal_to(response.json()['id_token'])
+
+    @pytest.mark.asyncio
     async def test_userinfo_response(self):
         # Given
         expected_status_code = 200

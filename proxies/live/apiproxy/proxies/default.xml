@@ -9,7 +9,7 @@
             </Step>
         </Request>
     </PreFlow>
-    <Flows>      
+    <Flows>
       <Flow name="AddPayloadToPing">
         <Description/>
         <Request/>
@@ -19,7 +19,7 @@
           </Step>
         </Response>
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
-      </Flow>    
+      </Flow>
       <Flow name="cis2_simulated_token">
           <Description/>
           <Request>
@@ -47,6 +47,37 @@
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and (request.verb = "POST")</Condition>
       </Flow>
+      <Flow name="nhs_login_simulated_token">
+          <Description/>
+          <Request>
+              <Step>
+                  <Name>RaiseFault.MissingClientAssertion</Name>
+                  <Condition>request.formparam.client_assertion Equals null</Condition>
+              </Step>
+              <Step>
+                  <Name>LookupCache.SimulatedAuthAuthMethod</Name>
+              </Step>
+          </Request>
+          <Response>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_P0</Name>
+                  <Condition>auth_method Equals "P0"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_P5</Name>
+                  <Condition>auth_method Equals "P5"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_P9</Name>
+                  <Condition>auth_method Equals "P9"</Condition>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.SimulatedTokenPayload_P9</Name>
+                  <Condition>auth_method Equals null</Condition>
+              </Step>
+          </Response>
+          <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_token") and (request.verb = "POST")</Condition>
+      </Flow>
       <Flow name="Flow.GetUserInfoSimulatedAuth">
         <Description/>
         <Request>
@@ -57,14 +88,14 @@
         <Response/>
         <Condition>(proxy.pathsuffix MatchesPath "/userinfo") and (request.verb = "GET")</Condition>
       </Flow>
-      <Flow name="Flow.SimulatedUserAuth">
+      <Flow name="Flow.SimulatedUserAuthCis2">
           <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
           <Request>
               <!-- Check the redirect_uri and client_id. Although we generate the redirect to this URL, an app developer might get creative somehow
           and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-            <Condition>(request.queryparam.client_id NotEquals identity-service-config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals identity-service-config.cis2.redirect_uri)</Condition>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPage</Name>
@@ -72,7 +103,7 @@
         </Request>
         <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "GET")</Condition>
       </Flow>
-      <Flow name="Flow.SimulatedUserAuthPost">
+      <Flow name="Flow.SimulatedUserAuthPostCis2">
           <Description>Provide a simulated user authorization interaction - Process login</Description>
           <Response>
               <Step>
@@ -82,10 +113,40 @@
                   <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
               </Step>
               <Step>
-                  <Name>AssignMessage.RedirectToApigeeCallback</Name>
+                  <Name>AssignMessage.RedirectToApigeeCallbackCIS2</Name>
               </Step>
           </Response>
           <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and (request.verb Equals "POST")</Condition>
+      </Flow>
+      <Flow name="Flow.SimulatedUserAuthNHSLogin">
+          <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
+          <Request>
+              <!-- Check the redirect_uri and client_id. Although we generate the redirect to this URL, an app developer might get creative somehow
+          and we need to illustrate that what they are doing will break the authentication. -->
+          <Step>
+            <Name>RaiseFault.Unauthorized</Name>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.nhs_login.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.nhs_login.redirect_uri)</Condition>
+          </Step>
+          <Step>
+            <Name>AssignMessage.SimulatedAuthPageNHSLogin</Name>
+          </Step>
+        </Request>
+        <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_auth") and (request.verb Equals "GET")</Condition>
+      </Flow>
+      <Flow name="Flow.SimulatedUserAuthPostNHSLogin">
+          <Description>Provide a simulated user authorization interaction - Process login</Description>
+          <Response>
+              <Step>
+                  <Name>AssignMessage.GenerateSimulatedAuthCode</Name>
+              </Step>
+              <Step>
+                  <Name>PopulateCache.SimulatedAuthAuthMethod</Name>
+              </Step>
+              <Step>
+                  <Name>AssignMessage.RedirectToApigeeCallbackNHSLogin</Name>
+              </Step>
+          </Response>
+          <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_auth") and (request.verb Equals "POST")</Condition>
       </Flow>
   </Flows>
     <PostClientFlow name="PostClientFlow">
@@ -94,19 +155,25 @@
           <Name>FlowCallout.LogToSplunk</Name>
         </Step>
       </Response>
-    </PostClientFlow>  
+    </PostClientFlow>
     <HTTPProxyConnection>
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
-    <RouteRule name="NoRouteSimulatedAuthPage">
+    <RouteRule name="NoRouteSimulatedAuthPageCis2">
         <Condition>(proxy.pathsuffix MatchesPath "/simulated_auth") and ((request.verb = "GET") or (request.verb = "HEAD") or (request.verb = "POST"))</Condition>
+    </RouteRule>
+    <RouteRule name="NoRouteSimulatedAuthPageNHSLogin">
+        <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_auth") and ((request.verb = "GET") or (request.verb = "HEAD") or (request.verb = "POST"))</Condition>
     </RouteRule>
     <RouteRule name="NoRoutePing">
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </RouteRule>
     <RouteRule name="NoRouteCis2MockToken">
       <Condition>(proxy.pathsuffix MatchesPath "/cis2_simulated_token") and ((request.verb = "POST"))</Condition>
+    </RouteRule>
+    <RouteRule name="NoRouteNHSLoginMockToken">
+      <Condition>(proxy.pathsuffix MatchesPath "/nhs_login_simulated_token") and ((request.verb = "POST"))</Condition>
     </RouteRule>
     <RouteRule name="NoRouteUserInfo">
       <Condition>(proxy.pathsuffix MatchesPath "/userinfo") and ((request.verb = "GET"))</Condition>

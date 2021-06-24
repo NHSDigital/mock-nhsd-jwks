@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.RedirectToApigeeCallbackNHSLogin">
+    <Set>
+        <StatusCode>302</StatusCode>
+        <Headers>
+          <Header name="Location">{mock_proxy_config.nhs_login.redirect_uri}?code={authorization_code}&amp;state={request.formparam.state}&amp;client_id={mock_proxy_config.nhs_login.client_id}</Header>
+        </Headers>
+    </Set>
+    <AssignTo createNew="true" transport="http" type="response"/>
+</AssignMessage>
