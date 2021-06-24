@@ -45,5 +45,4 @@ extends:
       - environment: int
         stage_name: int_no_smartcard
         jinja_templates:
-          VARIABLES_KVM: identity_service_config_no_smartcard
-
+          VARIABLES_KVM: mock_proxy_config
