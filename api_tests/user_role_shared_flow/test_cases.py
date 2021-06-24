@@ -86,13 +86,14 @@ class TestCasesSuite:
 
         # When
         response = requests.post(
-            url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token'
+            url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token',
+            data={'client_assertion' : '1234'}
         )
 
          # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
         assert_that(expected_response).is_equal_to(response.json()['id_token'])
-        
+
     @pytest.mark.asyncio
     async def test_userinfo_response(self):
         # Given
