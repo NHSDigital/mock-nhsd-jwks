@@ -1,0 +1,17 @@
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.MissingClientAssertion">
+  <Properties/>
+  <FaultResponse>
+    <Set>
+      <Payload contentType="application/json">
+        {
+          "error" : "missing_client_assertion",
+          "error_description" :"client_assertion form parameter is missing",
+          "message_id": "{messageid}"
+        }
+      </Payload>
+      <StatusCode>400</StatusCode>
+      <ReasonPhrase>Bad Request</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
