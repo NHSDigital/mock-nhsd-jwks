@@ -59,12 +59,12 @@
         </head>
         <body class="text-center">
           <form class="form-signin" method="post">
-            <h1 class="h3 mb-3 font-weight-normal">Simulated login page</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Simulated login page (NHS Login)</h1>
             <p>
-              This facility can be used to develop your OAuth 2 Client Application without needing a smartcard and smartcard reader.
+              This facility can be used to develop your OAuth 2 Client Application without needing to onboard with NHS Login.
             </p>
             <p>
-              See our <a href="https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/user-restricted-restful-apis-nhs-identity-combined-authentication-and-authorisation">documentation</a> for more information.
+              See our <a href="https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/user-restricted-restful-apis-nhs-login-combined-authentication-and-authorisation">documentation</a> for more information.
             </p>
             <input type="hidden" name="state" value="{request.queryparam.state}" />
             <div>
