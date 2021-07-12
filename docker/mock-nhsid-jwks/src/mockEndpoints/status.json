@@ -1,3 +1,8 @@
 {
-    "message": "Ok"
-}
+    "status": "pass",
+    "checks": {
+        "healthcheck": {
+            "status": "pass"
+            }
+        }
+    }
