@@ -91,11 +91,9 @@
       <Flow name="Flow.SimulatedUserAuthCis2">
           <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
           <Request>
-              <!-- Check the redirect_uri and client_id. Although we generate the redirect to this URL, an app developer might get creative somehow
-          and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-              <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri and not request.queryparam.redirect_uri ~~ ".*(-pr-\d+/callback)$")</Condition>
+              <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPage</Name>
@@ -121,11 +119,9 @@
       <Flow name="Flow.SimulatedUserAuthNHSLogin">
           <Description>Provide a simulated user authorization interaction - Display login dialogue</Description>
           <Request>
-              <!-- Check the redirect_uri and client_id. Although we generate the redirect to this URL, an app developer might get creative somehow
-          and we need to illustrate that what they are doing will break the authentication. -->
           <Step>
             <Name>RaiseFault.Unauthorized</Name>
-            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.nhs_login.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.nhs_login.redirect_uri)</Condition>
+            <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.nhs_login.client_id)</Condition>
           </Step>
           <Step>
             <Name>AssignMessage.SimulatedAuthPageNHSLogin</Name>
