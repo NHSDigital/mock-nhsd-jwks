@@ -10,6 +10,7 @@ steps:
       pip install -r requirements.txt
     workingDirectory: $(Pipeline.Workspace)/s/${{ parameters.service_name }}/$(SERVICE_ARTIFACT_NAME)/api_tests
     displayName: Setup integration tests
+
   - bash: |
       source ./test_env/bin/activate
       export OAUTH_BASE_URI="https://$(APIGEE_ENVIRONMENT).api.service.nhs.uk"
@@ -21,8 +22,9 @@ steps:
       export APIGEE_API_TOKEN="$(secret.AccessToken)"
       export MOCK_PROXY=$SERVICE_NAME
       pytest --reruns 5 --reruns-delay 1 -v --junitxml=test-report.xml
-    workingDirectory: $(Pipeline.Workspace)/s/${{ parameters.service_name }}/$(SERVICE_ARTIFACT_NAME)/api_tests
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/api_tests
     displayName: Run integration tests
+
   - task: PublishTestResults@2
     displayName: 'Publish integration test results'
     condition: always()
