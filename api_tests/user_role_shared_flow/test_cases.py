@@ -1,10 +1,8 @@
-import json
+from os import EX_TEMPFAIL
 import pytest
 import requests
 from assertpy import assert_that
 from api_tests.config_files import config
-from api_test_utils.oauth_helper import OauthHelper
-from api_test_utils.apigee_api_apps import ApigeeApiDeveloperApps
 
 
 @pytest.mark.asyncio
@@ -12,16 +10,21 @@ class TestCasesSuite:
     """ A test suite for the mock oidc responses """
 
     @pytest.fixture()
-    async def test_app(self):
-        """Testing App Setup"""
-        apigee_app = ApigeeApiDeveloperApps()
-        print("Creating Test App..")
-        await apigee_app.create_new_app(
-            callback_url="https://nhsd-apim-testing-internal-dev.herokuapp.com/callback"
-        )
+    async def test_app_and_product(self, app, product):
+        """Create a test app and product which can be modified in the test"""
+        await product.create_new_product()
 
-        # Set default JWT Testing resource url
-        await apigee_app.set_custom_attributes(
+        await app.create_new_app()
+
+        await product.update_scopes(
+            [
+                "urn:nhsd:apim:app:level3:personal-demographics-service",
+                "urn:nhsd:apim:user-nhs-id:aal3:personal-demographics-service",
+                "urn:nhsd:apim:user-nhs-login:P9:personal-demographics-service",
+            ]
+        )
+        await app.add_api_product([product.name])
+        await app.set_custom_attributes(
             {
                 "jwks-resource-url": "https://raw.githubusercontent.com/NHSDigital/"
                 "identity-service-jwks/main/jwks/internal-dev/"
@@ -29,11 +32,10 @@ class TestCasesSuite:
             }
         )
 
-        await apigee_app.add_api_product(api_products=[config.MOCK_PROXY_PATH])
+        yield product, app
 
-        yield apigee_app
-        print("Destroying Test App..")
-        await apigee_app.destroy_app()
+        await app.destroy_app()
+        await product.destroy_product()
 
     @pytest.mark.asyncio
     async def test_cis2_simulated_token_response(self):
@@ -87,7 +89,7 @@ class TestCasesSuite:
         # When
         response = requests.post(
             url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token',
-            data={'client_assertion' : '1234'}
+            data={'client_assertion': '1234'}
         )
 
         #Then
@@ -107,3 +109,51 @@ class TestCasesSuite:
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
         assert_that(response.json()).is_not_equal_to({})
+
+    @pytest.mark.asyncio
+    async def test_client_credentials(self, get_token_client_credentials):
+        # Given
+        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_at']
+
+        # When
+        body = get_token_client_credentials
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        # assert list(body.keys()) == ['access_token', 'expires_in', 'token_type', 'issued_at']
+
+    @pytest.mark.asyncio
+    async def test_cis2_authorization_code(self, get_token):
+        # Given
+        expected_body_keys = ['access_token', 'expires_in', 'refresh_token', 'refresh_token_expires_in', 'refresh_count','token_type']
+
+        # When
+        body = get_token
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+
+
+    @pytest.mark.asyncio
+    async def test_cis2_token_exchange(self, get_token_cis2_token_exchange):
+        # Given
+        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_token_type']
+
+        # When
+        body = get_token_cis2_token_exchange
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+
+
+    @pytest.mark.asyncio
+    async def test_nhs_login_token_exchange(self, get_token_nhs_login_token_exchange):
+        # Given
+        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_token_type']
+
+        # When
+        body = get_token_nhs_login_token_exchange
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+
