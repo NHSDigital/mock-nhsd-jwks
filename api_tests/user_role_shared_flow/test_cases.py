@@ -9,34 +9,6 @@ from api_tests.config_files import config
 class TestCasesSuite:
     """ A test suite for the mock oidc responses """
 
-    @pytest.fixture()
-    async def test_app_and_product(self, app, product):
-        """Create a test app and product which can be modified in the test"""
-        await product.create_new_product()
-
-        await app.create_new_app()
-
-        await product.update_scopes(
-            [
-                "urn:nhsd:apim:app:level3:personal-demographics-service",
-                "urn:nhsd:apim:user-nhs-id:aal3:personal-demographics-service",
-                "urn:nhsd:apim:user-nhs-login:P9:personal-demographics-service",
-            ]
-        )
-        await app.add_api_product([product.name])
-        await app.set_custom_attributes(
-            {
-                "jwks-resource-url": "https://raw.githubusercontent.com/NHSDigital/"
-                "identity-service-jwks/main/jwks/internal-dev/"
-                "9baed6f4-1361-4a8e-8531-1f8426e3aba8.json"
-            }
-        )
-
-        yield product, app
-
-        await app.destroy_app()
-        await product.destroy_product()
-
     @pytest.mark.asyncio
     async def test_cis2_simulated_token_response(self):
         # Given
@@ -120,7 +92,6 @@ class TestCasesSuite:
 
         # Then
         assert_that(list(body.keys())).is_equal_to(expected_body_keys)
-        # assert list(body.keys()) == ['access_token', 'expires_in', 'token_type', 'issued_at']
 
     @pytest.mark.asyncio
     async def test_cis2_authorization_code(self, get_token):
