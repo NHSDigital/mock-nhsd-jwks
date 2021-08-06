@@ -104,6 +104,17 @@ class TestCasesSuite:
         # Then
         assert_that(list(body.keys())).is_equal_to(expected_body_keys)
 
+    @pytest.mark.asyncio
+    async def test_nhs_login_authorization_code(self, get_token_nhs_login):
+        # Given
+        expected_body_keys = ['access_token', 'expires_in', 'refresh_token', 'refresh_token_expires_in', 'refresh_count','token_type']
+
+        # When
+        body = get_token_nhs_login
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+
 
     @pytest.mark.asyncio
     async def test_cis2_token_exchange(self, get_token_cis2_token_exchange):

@@ -7,6 +7,8 @@ from api_test_utils.apigee_api_products import ApigeeApiProducts
 from api_test_utils.apigee_api_trace import ApigeeApiTraceDebug
 from api_test_utils.oauth_helper import OauthHelper
 from .config_files import config
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
 
 
 @pytest.fixture(scope='session')
@@ -66,7 +68,8 @@ async def test_app_and_product(app, product):
         [
             "urn:nhsd:apim:app:level3:shared-flow-testing",
             "urn:nhsd:apim:user-nhs-id:aal3:shared-flow-testing",
-            "urn:nhsd:apim:user-nhs-login:P9:shared-flow-testing",
+            "urn:nhsd:apim:user-nhs-login:P5:shared-flow-testing",
+            "urn:nhsd:apim:user-nhs-login:P9:shared-flow-testing"
         ]
     )
     await app.add_api_product([product.name])
@@ -96,6 +99,83 @@ async def get_token(test_app_and_product):
     token_resp = await oauth.get_token_response(grant_type="authorization_code")
     assert token_resp["status_code"] == 200
     return token_resp["body"]
+
+@pytest.fixture
+async def get_token_nhs_login(test_app_and_product):
+    test_product, test_app = test_app_and_product
+    oauth = OauthHelper(
+        client_id=test_app.client_id,
+        client_secret=test_app.client_secret,
+        redirect_uri=test_app.callback_url,
+    )
+    # Make authorize request to retrieve state2
+    response = await oauth.hit_oauth_endpoint(
+        method="GET",
+        endpoint="authorize",
+        params={
+            "client_id": oauth.client_id,
+            "redirect_uri": oauth.redirect_uri,
+            "response_type": "code",
+            "state": "1234567890",
+            "scope": "nhs-login"
+        },
+        allow_redirects=False,
+    )
+
+    location = response['headers']['Location']
+    state = urlparse.urlparse(location)
+    state = parse_qs(state.query)['state']
+
+    # # Make simulated auth request to authenticate
+    response = await oauth.hit_oauth_endpoint(
+        base_uri="https://internal-dev.api.service.nhs.uk/mock-nhsid-jwks",
+        method="POST",
+        endpoint="nhs_login_simulated_auth",
+        params={
+            "response_type": "code",
+            "client_id": oauth.client_id,
+            "redirect_uri": oauth.redirect_uri,
+            "scope": "openid",
+            "state": state[0],
+        },
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        data={
+            "state": state[0],
+            "auth_method": "P5"
+        },
+        allow_redirects=False,
+    )
+    # # Make initial callback request
+    location = response['headers']['Location']
+    auth_code = urlparse.urlparse(location)
+    auth_code = parse_qs(auth_code.query)['code']
+
+    response = await oauth.hit_oauth_endpoint(
+        method="GET",
+        endpoint="callback",
+        params={"code": auth_code[0], "client_id": "some-client-id", "state": state[0]},
+        allow_redirects=False,
+    )
+
+    location = response['headers']['Location']
+    auth_code = urlparse.urlparse(location)
+    auth_code = parse_qs(auth_code.query)['code']
+
+    token_resp = await oauth.hit_oauth_endpoint(
+        method="POST",
+        endpoint="token",
+        data={
+            "grant_type": "authorization_code",
+            "state": state,
+            "code": auth_code, 
+            "redirect_uri": oauth.redirect_uri,
+            "client_id": oauth.client_id, 
+            "client_secret": oauth.client_secret
+        },
+        allow_redirects=False,
+    )
+
+    return token_resp['body']
 
 
 @pytest.fixture()
