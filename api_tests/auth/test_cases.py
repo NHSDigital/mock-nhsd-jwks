@@ -18,12 +18,12 @@ class TestCasesSuite:
 
         # When
         response = requests.post(
-            url=config.MOCK_PROXY_BASE_PATH + '/cis2_simulated_token'
+            url=config.MOCK_PROXY_BASE_PATH + "/cis2_simulated_token"
         )
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
-        assert_that(expected_response).is_equal_to(response.json()['id_token'])
+        assert_that(expected_response).is_equal_to(response.json()["id_token"])
 
     @pytest.mark.asyncio
     async def test_cis2_public_key_response(self):
@@ -32,7 +32,7 @@ class TestCasesSuite:
 
         # When
         response = requests.get(
-            url=config.MOCK_PROXY_BASE_PATH + '/identity-service/jwks'
+            url=config.MOCK_PROXY_BASE_PATH + "/identity-service/jwks"
         )
 
         # Then
@@ -45,7 +45,7 @@ class TestCasesSuite:
 
         # When
         response = requests.get(
-            url=config.MOCK_PROXY_BASE_PATH + '/identity-service/nhs-login-jwks'
+            url=config.MOCK_PROXY_BASE_PATH + "/identity-service/nhs-login-jwks"
         )
 
         # Then
@@ -60,13 +60,13 @@ class TestCasesSuite:
 
         # When
         response = requests.post(
-            url=config.MOCK_PROXY_BASE_PATH + '/nhs_login_simulated_token',
-            data={'client_assertion': '1234'}
+            url=config.MOCK_PROXY_BASE_PATH + "/nhs_login_simulated_token",
+            data={"client_assertion": "1234"},
         )
 
-        #Then
+        # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
-        assert_that(expected_response).is_equal_to(response.json()['id_token'])
+        assert_that(expected_response).is_equal_to(response.json()["id_token"])
 
     @pytest.mark.asyncio
     async def test_userinfo_response(self):
@@ -74,9 +74,7 @@ class TestCasesSuite:
         expected_status_code = 200
 
         # When
-        response = requests.get(
-            url=config.MOCK_PROXY_BASE_PATH + '/userinfo'
-        )
+        response = requests.get(url=config.MOCK_PROXY_BASE_PATH + "/userinfo")
 
         # Then
         assert_that(expected_status_code).is_equal_to(response.status_code)
@@ -85,7 +83,7 @@ class TestCasesSuite:
     @pytest.mark.asyncio
     async def test_client_credentials(self, get_token_client_credentials):
         # Given
-        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_at']
+        expected_body_keys = ["access_token", "expires_in", "token_type", "issued_at"]
 
         # When
         body = get_token_client_credentials
@@ -94,32 +92,14 @@ class TestCasesSuite:
         assert_that(list(body.keys())).is_equal_to(expected_body_keys)
 
     @pytest.mark.asyncio
-    async def test_cis2_authorization_code(self, get_token):
-        # Given
-        expected_body_keys = ['access_token', 'expires_in', 'refresh_token', 'refresh_token_expires_in', 'refresh_count','token_type']
-
-        # When
-        body = get_token
-
-        # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
-
-    @pytest.mark.asyncio
-    async def test_nhs_login_authorization_code(self, get_token_nhs_login):
-        # Given
-        expected_body_keys = ['access_token', 'expires_in', 'refresh_token', 'refresh_token_expires_in', 'refresh_count','token_type']
-
-        # When
-        body = get_token_nhs_login
-
-        # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
-
-
-    @pytest.mark.asyncio
     async def test_cis2_token_exchange(self, get_token_cis2_token_exchange):
         # Given
-        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_token_type']
+        expected_body_keys = [
+            "access_token",
+            "expires_in",
+            "token_type",
+            "issued_token_type",
+        ]
 
         # When
         body = get_token_cis2_token_exchange
@@ -127,11 +107,15 @@ class TestCasesSuite:
         # Then
         assert_that(list(body.keys())).is_equal_to(expected_body_keys)
 
-
     @pytest.mark.asyncio
     async def test_nhs_login_token_exchange(self, get_token_nhs_login_token_exchange):
         # Given
-        expected_body_keys = ['access_token', 'expires_in', 'token_type', 'issued_token_type']
+        expected_body_keys = [
+            "access_token",
+            "expires_in",
+            "token_type",
+            "issued_token_type",
+        ]
 
         # When
         body = get_token_nhs_login_token_exchange
@@ -139,3 +123,40 @@ class TestCasesSuite:
         # Then
         assert_that(list(body.keys())).is_equal_to(expected_body_keys)
 
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("auth_method", ["P0", "P5", "P9"])
+    async def test_auth_code_nhs_login(self, get_token_auth_code_nhs_login):
+        # Given
+        expected_body_keys = [
+            "access_token",
+            "expires_in",
+            "refresh_token",
+            "refresh_token_expires_in",
+            "refresh_count",
+            "token_type",
+        ]
+
+        # When
+        body = get_token_auth_code_nhs_login
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("auth_method", ["N3_SMARTCARD", "FIDO2", "IOS"])
+    async def test_auth_code_nhs_cis2(self, get_token_auth_code_nhs_cis2):
+        # Given
+        expected_body_keys = [
+            "access_token",
+            "expires_in",
+            "refresh_token",
+            "refresh_token_expires_in",
+            "refresh_count",
+            "token_type",
+        ]
+
+        # When
+        body = get_token_auth_code_nhs_cis2
+
+        # Then
+        assert_that(list(body.keys())).is_equal_to(expected_body_keys)

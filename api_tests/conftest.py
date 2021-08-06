@@ -1,5 +1,6 @@
 # flake8: noqa
 from time import time
+from _pytest.mark import param
 import pytest
 from api_test_utils.api_test_session_config import APITestSessionConfig
 from api_test_utils.apigee_api_apps import ApigeeApiDeveloperApps
@@ -9,9 +10,10 @@ from api_test_utils.oauth_helper import OauthHelper
 from .config_files import config
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
+import asyncio
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def api_test_config() -> APITestSessionConfig:
     """
         this imports a 'standard' test session config,
@@ -69,15 +71,16 @@ async def test_app_and_product(app, product):
             "urn:nhsd:apim:app:level3:shared-flow-testing",
             "urn:nhsd:apim:user-nhs-id:aal3:shared-flow-testing",
             "urn:nhsd:apim:user-nhs-login:P5:shared-flow-testing",
-            "urn:nhsd:apim:user-nhs-login:P9:shared-flow-testing"
+            "urn:nhsd:apim:user-nhs-login:P9:shared-flow-testing",
+            "urn:nhsd:apim:user-nhs-login:P0:shared-flow-testing",
         ]
     )
     await app.add_api_product([product.name])
     await app.set_custom_attributes(
         {
             "jwks-resource-url": "https://raw.githubusercontent.com/NHSDigital/"
-                                 "identity-service-jwks/main/jwks/internal-dev/"
-                                 "9baed6f4-1361-4a8e-8531-1f8426e3aba8.json"
+            "identity-service-jwks/main/jwks/internal-dev/"
+            "9baed6f4-1361-4a8e-8531-1f8426e3aba8.json"
         }
     )
 
@@ -85,97 +88,6 @@ async def test_app_and_product(app, product):
 
     await app.destroy_app()
     await product.destroy_product()
-
-
-@pytest.fixture()
-async def get_token(test_app_and_product):
-    """Call identity server to get an access token"""
-    test_product, test_app = test_app_and_product
-    oauth = OauthHelper(
-        client_id=test_app.client_id,
-        client_secret=test_app.client_secret,
-        redirect_uri=test_app.callback_url,
-    )
-    token_resp = await oauth.get_token_response(grant_type="authorization_code")
-    assert token_resp["status_code"] == 200
-    return token_resp["body"]
-
-@pytest.fixture
-async def get_token_nhs_login(test_app_and_product):
-    test_product, test_app = test_app_and_product
-    oauth = OauthHelper(
-        client_id=test_app.client_id,
-        client_secret=test_app.client_secret,
-        redirect_uri=test_app.callback_url,
-    )
-    # Make authorize request to retrieve state2
-    response = await oauth.hit_oauth_endpoint(
-        method="GET",
-        endpoint="authorize",
-        params={
-            "client_id": oauth.client_id,
-            "redirect_uri": oauth.redirect_uri,
-            "response_type": "code",
-            "state": "1234567890",
-            "scope": "nhs-login"
-        },
-        allow_redirects=False,
-    )
-
-    location = response['headers']['Location']
-    state = urlparse.urlparse(location)
-    state = parse_qs(state.query)['state']
-
-    # # Make simulated auth request to authenticate
-    response = await oauth.hit_oauth_endpoint(
-        base_uri="https://internal-dev.api.service.nhs.uk/mock-nhsid-jwks",
-        method="POST",
-        endpoint="nhs_login_simulated_auth",
-        params={
-            "response_type": "code",
-            "client_id": oauth.client_id,
-            "redirect_uri": oauth.redirect_uri,
-            "scope": "openid",
-            "state": state[0],
-        },
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={
-            "state": state[0],
-            "auth_method": "P5"
-        },
-        allow_redirects=False,
-    )
-    # # Make initial callback request
-    location = response['headers']['Location']
-    auth_code = urlparse.urlparse(location)
-    auth_code = parse_qs(auth_code.query)['code']
-
-    response = await oauth.hit_oauth_endpoint(
-        method="GET",
-        endpoint="callback",
-        params={"code": auth_code[0], "client_id": "some-client-id", "state": state[0]},
-        allow_redirects=False,
-    )
-
-    location = response['headers']['Location']
-    auth_code = urlparse.urlparse(location)
-    auth_code = parse_qs(auth_code.query)['code']
-
-    token_resp = await oauth.hit_oauth_endpoint(
-        method="POST",
-        endpoint="token",
-        data={
-            "grant_type": "authorization_code",
-            "state": state,
-            "code": auth_code, 
-            "redirect_uri": oauth.redirect_uri,
-            "client_id": oauth.client_id, 
-            "client_secret": oauth.client_secret
-        },
-        allow_redirects=False,
-    )
-
-    return token_resp['body']
 
 
 @pytest.fixture()
@@ -206,31 +118,33 @@ async def get_token_cis2_token_exchange(test_app_and_product):
     )
 
     claims = {
-        'at_hash': 'tf_-lqpq36lwO7WmSBIJ6Q',
-        'sub': 'lala',
-        'auditTrackingId': '91f694e6-3749-42fd-90b0-c3134b0d98f6-1546391',
-        'amr': ['N3_SMARTCARD'],
-        'iss': 'https://am.nhsint.auth-ptl.cis2.spineservices.nhs.uk:443/'
-               'openam/oauth2/realms/root/realms/NHSIdentity/realms/Healthcare',
-        'tokenName': 'id_token',
-        'aud': '969567331415.apps.national',
-        'c_hash': 'bc7zzGkClC3MEiFQ3YhPKg',
-        'acr': 'AAL3_ANY',
-        'org.forgerock.openidconnect.ops': '-I45NjmMDdMa-aNF2sr9hC7qEGQ',
-        's_hash': 'LPJNul-wow4m6Dsqxbning',
-        'azp': '969567331415.apps.national',
-        'auth_time': 1610559802,
-        'realm': '/NHSIdentity/Healthcare',
-        'exp': int(time()) + 6000,
-        'tokenType': 'JWTToken',
-        'iat': int(time()) - 100
+        "at_hash": "tf_-lqpq36lwO7WmSBIJ6Q",
+        "sub": "lala",
+        "auditTrackingId": "91f694e6-3749-42fd-90b0-c3134b0d98f6-1546391",
+        "amr": ["N3_SMARTCARD"],
+        "iss": "https://am.nhsint.auth-ptl.cis2.spineservices.nhs.uk:443/"
+        "openam/oauth2/realms/root/realms/NHSIdentity/realms/Healthcare",
+        "tokenName": "id_token",
+        "aud": "969567331415.apps.national",
+        "c_hash": "bc7zzGkClC3MEiFQ3YhPKg",
+        "acr": "AAL3_ANY",
+        "org.forgerock.openidconnect.ops": "-I45NjmMDdMa-aNF2sr9hC7qEGQ",
+        "s_hash": "LPJNul-wow4m6Dsqxbning",
+        "azp": "969567331415.apps.national",
+        "auth_time": 1610559802,
+        "realm": "/NHSIdentity/Healthcare",
+        "exp": int(time()) + 6000,
+        "tokenType": "JWTToken",
+        "iat": int(time()) - 100,
     }
 
     with open(config.ID_TOKEN_PRIVATE_KEY_ABSOLUTE_PATH, "r") as f:
         contents = f.read()
 
     client_assertion_jwt = oauth.create_jwt(kid="test-1")
-    id_token_jwt = oauth.create_id_token_jwt(kid="identity-service-tests-1", claims=claims, signing_key=contents)
+    id_token_jwt = oauth.create_id_token_jwt(
+        kid="identity-service-tests-1", claims=claims, signing_key=contents
+    )
 
     # When
     token_resp = await oauth.get_token_response(
@@ -305,3 +219,95 @@ async def get_token_nhs_login_token_exchange(test_app_and_product):
     )
     assert token_resp["status_code"] == 200
     return token_resp["body"]
+
+
+async def _get_token_auth_code(
+    test_app_and_product, scope: str = "", auth_method: str = ""
+):
+    test_product, test_app = test_app_and_product
+    oauth = OauthHelper(
+        client_id=test_app.client_id,
+        client_secret=test_app.client_secret,
+        redirect_uri=test_app.callback_url,
+    )
+    # Make authorize request to retrieve state2
+    response = await oauth.hit_oauth_endpoint(
+        method="GET",
+        endpoint="authorize",
+        params={
+            "client_id": oauth.client_id,
+            "redirect_uri": oauth.redirect_uri,
+            "response_type": "code",
+            "state": "1234567890",
+            "scope": scope,
+        },
+        allow_redirects=False,
+    )
+
+    location = response["headers"]["Location"]
+    state = urlparse.urlparse(location)
+    state = parse_qs(state.query)["state"]
+
+    # # Make simulated auth request to authenticate
+    response = await oauth.hit_oauth_endpoint(
+        base_uri="https://internal-dev.api.service.nhs.uk/mock-nhsid-jwks",
+        method="POST",
+        endpoint="nhs_login_simulated_auth",
+        params={
+            "response_type": "code",
+            "client_id": oauth.client_id,
+            "redirect_uri": oauth.redirect_uri,
+            "scope": "openid",
+            "state": state[0],
+        },
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        data={"state": state[0], "auth_method": auth_method},
+        allow_redirects=False,
+    )
+    # # Make initial callback request
+    location = response["headers"]["Location"]
+    auth_code = urlparse.urlparse(location)
+    auth_code = parse_qs(auth_code.query)["code"]
+
+    response = await oauth.hit_oauth_endpoint(
+        method="GET",
+        endpoint="callback",
+        params={"code": auth_code[0], "client_id": "some-client-id", "state": state[0]},
+        allow_redirects=False,
+    )
+
+    location = response["headers"]["Location"]
+    auth_code = urlparse.urlparse(location)
+    auth_code = parse_qs(auth_code.query)["code"]
+
+    token_resp = await oauth.hit_oauth_endpoint(
+        method="POST",
+        endpoint="token",
+        data={
+            "grant_type": "authorization_code",
+            "state": state,
+            "code": auth_code,
+            "redirect_uri": oauth.redirect_uri,
+            "client_id": oauth.client_id,
+            "client_secret": oauth.client_secret,
+        },
+        allow_redirects=False,
+    )
+
+    return token_resp["body"]
+
+
+@pytest.fixture()
+def get_token_auth_code_nhs_login(test_app_and_product, auth_method):
+    return asyncio.run(
+        _get_token_auth_code(
+            test_app_and_product, scope="nhs-login", auth_method=auth_method
+        )
+    )
+
+
+@pytest.fixture()
+def get_token_auth_code_nhs_cis2(test_app_and_product, auth_method):
+    return asyncio.run(
+        _get_token_auth_code(test_app_and_product, auth_method=auth_method)
+    )
