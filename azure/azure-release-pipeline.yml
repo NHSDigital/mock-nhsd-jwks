@@ -36,6 +36,10 @@ extends:
       VARIABLES_KVM: mock_proxy_config
     apigee_deployments:
       - environment: internal-dev
+        post_deploy:
+          - template: ./templates/run-integration-tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}       
       - environment: internal-dev-sandbox
       - environment: internal-qa
       - environment: internal-qa-sandbox
