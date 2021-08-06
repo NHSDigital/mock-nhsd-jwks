@@ -86,10 +86,10 @@ class TestCasesSuite:
         expected_body_keys = ["access_token", "expires_in", "token_type", "issued_at"]
 
         # When
-        body = get_token_client_credentials
+        token_response = get_token_client_credentials
 
         # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        assert_that(list(token_response.keys())).is_equal_to(expected_body_keys)
 
     @pytest.mark.asyncio
     async def test_cis2_token_exchange(self, get_token_cis2_token_exchange):
@@ -102,10 +102,10 @@ class TestCasesSuite:
         ]
 
         # When
-        body = get_token_cis2_token_exchange
+        token_response = get_token_cis2_token_exchange
 
         # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        assert_that(list(token_response.keys())).is_equal_to(expected_body_keys)
 
     @pytest.mark.asyncio
     async def test_nhs_login_token_exchange(self, get_token_nhs_login_token_exchange):
@@ -118,10 +118,10 @@ class TestCasesSuite:
         ]
 
         # When
-        body = get_token_nhs_login_token_exchange
+        token_response = get_token_nhs_login_token_exchange
 
         # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        assert_that(list(token_response.keys())).is_equal_to(expected_body_keys)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("auth_method", ["P0", "P5", "P9"])
@@ -137,10 +137,10 @@ class TestCasesSuite:
         ]
 
         # When
-        body = get_token_auth_code_nhs_login
+        token_response = get_token_auth_code_nhs_login
 
         # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        assert_that(list(token_response.keys())).is_equal_to(expected_body_keys)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("auth_method", ["N3_SMARTCARD", "FIDO2", "IOS"])
@@ -156,7 +156,7 @@ class TestCasesSuite:
         ]
 
         # When
-        body = get_token_auth_code_nhs_cis2
+        token_response = get_token_auth_code_nhs_cis2
 
         # Then
-        assert_that(list(body.keys())).is_equal_to(expected_body_keys)
+        assert_that(list(token_response.keys())).is_equal_to(expected_body_keys)
