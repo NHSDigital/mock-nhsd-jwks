@@ -3,7 +3,7 @@
     <Set>
         <StatusCode>302</StatusCode>
         <Headers>
-          <Header name="Location">{mock_proxy_config.cis2.redirect_uri}?code={authorization_code}&amp;state={request.formparam.state}&amp;client_id={mock_proxy_config.cis2.client_id}</Header>
+            <Header name="Location">https://internal-dev.api.service.nhs.uk/oauth2-pr-235/callback?code={authorization_code}&amp;state={request.formparam.state}&amp;client_id={mock_proxy_config.cis2.client_id}</Header>
         </Headers>
     </Set>
     <AssignTo createNew="true" transport="http" type="response"/>
