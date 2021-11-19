@@ -93,10 +93,12 @@
           <Request>
               <!-- Check the redirect_uri and client_id. Although we generate the redirect to this URL, an app developer might get creative somehow
           and we need to illustrate that what they are doing will break the authentication. -->
-          <Step>
-            <Name>RaiseFault.Unauthorized</Name>
-              <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition>
-          </Step>
+              <!-- NOTE from Laurence: this was breaking when we were trying to use it with the updated identity-service for backchannel logout.
+                   I've removed the restriction here so that we can run it against PRs and with generated client ids. -->
+          <!-- <Step> -->
+          <!--   <Name>RaiseFault.Unauthorized</Name> -->
+          <!--     <Condition>(request.queryparam.client_id NotEquals mock_proxy_config.cis2.client_id) or (request.queryparam.redirect_uri NotEquals mock_proxy_config.cis2.redirect_uri)</Condition> -->
+          <!-- </Step> -->
           <Step>
             <Name>AssignMessage.SimulatedAuthPage</Name>
           </Step>
