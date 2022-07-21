@@ -21,7 +21,7 @@ APIGEE_ENVIRONMENTS:
 meta:
   api:
     name: mock-proxy
-    guid: d5a3f4fc-e61f-41f3-ab72-16aa5ef3ff3b
+    guid: d5a3f4fc-e61f-41f3-ab72-16aa5ef3ff3c
     spec_guids: [ ]
   schema_version: 1
 apigee:
