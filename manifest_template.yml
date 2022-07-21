@@ -27,9 +27,9 @@ meta:
 apigee:
   environments:
 
-  { % for ENV in APIGEE_ENVIRONMENTS % }
-- name: { { ENV.name } }
-  products: [ ]
-  specs: [ ]
-  api_catalog: [ ]
-  { % endfor % }
+{% for ENV in APIGEE_ENVIRONMENTS %}
+  - name: {{ ENV.name }}
+    products: [ ]
+    specs: [ ]
+    api_catalog: [ ]
+{% endfor %}
