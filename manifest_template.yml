@@ -1,0 +1,35 @@
+## Manifest template ##
+# To view the expanded version of this template locally, clone api-management-utils
+#
+#   $ cd /path/to/local/api-management-utils/ansible
+#   $ DIST_DIR=/path/to/this/repo make template-manifest
+#
+#
+# Currently identity-service requires no products/specs/api_catalog entries.
+#
+APIGEE_ENVIRONMENTS:
+  - name: internal-dev
+  - name: internal-dev-sandbox
+  - name: internal-qa
+  - name: internal-qa-sandbox
+  - name: ref
+  - name: sandbox
+  - name: int
+  - name: dev
+
+---
+meta:
+  api:
+    name: mock-nhsid-jwks
+    guid: d5a3f4fc-e61f-41f3-ab72-16aa5ef3ff3c
+    spec_guids: [ ]
+  schema_version: 1
+apigee:
+  environments:
+
+{% for ENV in APIGEE_ENVIRONMENTS %}
+  - name: {{ ENV.name }}
+    products: [ ]
+    specs: [ ]
+    api_catalog: [ ]
+{% endfor %}
