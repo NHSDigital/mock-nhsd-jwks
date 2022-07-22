@@ -99,6 +99,9 @@ class TestCasesSuite:
             "expires_in",
             "token_type",
             "issued_token_type",
+            "refresh_token",
+            "refresh_token_expires_in",
+            "refresh_count",
         ]
 
         # When
@@ -115,6 +118,9 @@ class TestCasesSuite:
             "expires_in",
             "token_type",
             "issued_token_type",
+            "refresh_token",
+            "refresh_token_expires_in",
+            "refresh_count",
         ]
 
         # When
@@ -134,6 +140,7 @@ class TestCasesSuite:
             "refresh_token_expires_in",
             "refresh_count",
             "token_type",
+            "sid"
         ]
 
         # When
@@ -153,6 +160,7 @@ class TestCasesSuite:
             "refresh_token_expires_in",
             "refresh_count",
             "token_type",
+            "sid"
         ]
 
         # When
