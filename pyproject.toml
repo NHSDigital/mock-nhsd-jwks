@@ -35,7 +35,7 @@ pytest = "^6.2.2"
 flake8 = "^3.7.9"
 black = "^19.10b0"
 pip-licenses = "^2.0.1"
-jinja2 = "^2.11.1"
+jinja2 = "^2.11.3"
 
 
 [tool.poetry.scripts]
