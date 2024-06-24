@@ -11,3 +11,4 @@ build:
 
 run:
 	docker run -p 9000:9000 mock-nhsid-jwks:latest
+
